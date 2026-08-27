@@ -1,0 +1,135 @@
+/*
+ * Design tokens for Puzzle Playground.
+ *
+ * Everything visual in the app resolves through these variables. Three things
+ * are deliberate and worth knowing before you change them:
+ *
+ * 1. Tap targets are 64px minimum, not the 44px WCAG floor. Children aged 4-6
+ *    have poor fine-motor accuracy and miss small targets constantly.
+ * 2. Every bright hue ships with a pre-checked dark `-ink` partner. Those pairs
+ *    clear WCAG AA for normal text; don't put a bright hue on white text.
+ * 3. All animation durations come from --dur-*. That is the single lever that
+ *    reduced-motion pulls, so never hardcode a duration in a component.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Palette -------------------------------------------------------- */
+  /* Each hue: base (fills), -deep (borders/pressed), -ink (text on base).   */
+  --coral: #ff6b6b;
+  --coral-deep: #d94f4f;
+  --coral-ink: #4a1010;
+
+  --sunshine: #ffd93d;
+  --sunshine-deep: #e0b81c;
+  --sunshine-ink: #4a3a00;
+
+  --mint: #3ddc97;
+  --mint-deep: #22b979;
+  --mint-ink: #06381f;
+
+  --sky: #4d96ff;
+  --sky-deep: #2f77e6;
+  --sky-ink: #05235e;
+
+  --grape: #a66cff;
+  --grape-deep: #8a4de6;
+  --grape-ink: #2f0f5c;
+
+  --bubblegum: #ff7bd5;
+  --bubblegum-deep: #e85cbb;
+  --bubblegum-ink: #52104a;
+
+  /* ---- Surfaces ------------------------------------------------------- */
+  --bg: #fff9f0;
+  --bg-tint: #ffeede;
+  --surface: #ffffff;
+  --surface-sunk: #f3ecf7;
+
+  --ink: #2b2735;
+  --ink-soft: #6b6478;
+  --hairline: #e3dcec;
+
+  --shadow-color: 265deg 25% 45%;
+  --shadow-sm: 0 2px 0 0 hsl(var(--shadow-color) / 0.22);
+  --shadow-md: 0 6px 0 0 hsl(var(--shadow-color) / 0.2),
+    0 10px 22px -8px hsl(var(--shadow-color) / 0.35);
+  --shadow-lg: 0 10px 0 0 hsl(var(--shadow-color) / 0.18),
+    0 20px 40px -12px hsl(var(--shadow-color) / 0.4);
+
+  /* ---- Scale ---------------------------------------------------------- */
+  /* --scale is re-set per age group below; all sizing multiplies by it so
+     the whole UI grows for little hands without per-component overrides.  */
+  --scale: 1;
+
+  --tap-min: calc(64px * var(--scale));
+  --space-1: calc(4px * var(--scale));
+  --space-2: calc(8px * var(--scale));
+  --space-3: calc(14px * var(--scale));
+  --space-4: calc(22px * var(--scale));
+  --space-5: calc(34px * var(--scale));
+  --space-6: calc(52px * var(--scale));
+
+  --radius-sm: calc(12px * var(--scale));
+  --radius-md: calc(20px * var(--scale));
+  --radius-blob: calc(30px * var(--scale));
+  --radius-pill: 999px;
+
+  --border-w: calc(4px * var(--scale));
+
+  /* ---- Type ----------------------------------------------------------- */
+  /* Rounded letterforms read as friendlier to children; this stack finds a
+     rounded face on every major OS before falling back to plain system-ui. */
+  --font: ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", Quicksand,
+    Nunito, "Segoe UI Variable Display", system-ui, -apple-system, sans-serif;
+
+  --fs-sm: calc(17px * var(--scale));
+  --fs-body: calc(21px * var(--scale));
+  --fs-btn: calc(28px * var(--scale));
+  --fs-title: calc(40px * var(--scale));
+  --fs-hero: calc(58px * var(--scale));
+
+  /* ---- Motion --------------------------------------------------------- */
+  --dur-fast: 130ms;
+  --dur: 260ms;
+  --dur-slow: 520ms;
+  --dur-celebrate: 1400ms;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- Age-group scaling -----------------------------------------------
+ * Set by ProfileContext as data-age on <html>. Younger players get larger
+ * everything; the oldest group gets a denser layout so bigger boards fit.
+ */
+:root[data-age="little"] {
+  --scale: 1.15;
+}
+:root[data-age="medium"] {
+  --scale: 1;
+}
+:root[data-age="big"] {
+  --scale: 0.9;
+}
+
+/* ---- Reduced motion ---------------------------------------------------
+ * Honoured from two directions: the OS setting, and the in-app toggle that
+ * writes data-motion="off". Collapsing the duration tokens to zero disables
+ * every transition and animation in the app at once.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+    --dur-celebrate: 0ms;
+  }
+}
+
+:root[data-motion="off"] {
+  --dur-fast: 0ms;
+  --dur: 0ms;
+  --dur-slow: 0ms;
+  --dur-celebrate: 0ms;
+}

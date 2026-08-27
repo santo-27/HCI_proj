@@ -1,0 +1,194 @@
+@import "./tokens.css";
+
+/* ---- Reset ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  /* Kids drag things. Stop iOS from selecting text or firing a callout menu
+     when a drag starts slightly off-target. */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+svg {
+  display: block;
+}
+
+/* ---- Focus -----------------------------------------------------------
+ * Focus rings are thick and dark rather than suppressed: the keyboard path
+ * through the drag games is only usable if you can see where you are.
+ */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: calc(5px * var(--scale)) solid var(--ink);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Layout helpers --------------------------------------------------- */
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 12% 8%, #ffe3c9 0%, transparent 45%),
+    radial-gradient(circle at 88% 6%, #d9ecff 0%, transparent 42%),
+    radial-gradient(circle at 50% 100%, #ffe0f4 0%, transparent 55%),
+    var(--bg);
+}
+
+.screen {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Shared animations ------------------------------------------------ */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  20% {
+    transform: translateX(-9px) rotate(-5deg);
+  }
+  40% {
+    transform: translateX(9px) rotate(5deg);
+  }
+  60% {
+    transform: translateX(-6px) rotate(-3deg);
+  }
+  80% {
+    transform: translateX(6px) rotate(3deg);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 hsl(var(--shadow-color) / 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 calc(18px * var(--scale)) transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.is-wiggling {
+  animation: wiggle var(--dur-slow) var(--ease-out);
+}
+
+/* ---- Hue slots --------------------------------------------------------
+ * Putting one of these on an element rebinds --hue / --hue-deep / --hue-ink
+ * for that subtree. Components style against those three variables only, so
+ * a bright fill always arrives with its contrast-checked ink partner and the
+ * "no white text on a bright hue" rule holds by construction.
+ */
+.hue-coral {
+  --hue: var(--coral);
+  --hue-deep: var(--coral-deep);
+  --hue-ink: var(--coral-ink);
+}
+.hue-sunshine {
+  --hue: var(--sunshine);
+  --hue-deep: var(--sunshine-deep);
+  --hue-ink: var(--sunshine-ink);
+}
+.hue-mint {
+  --hue: var(--mint);
+  --hue-deep: var(--mint-deep);
+  --hue-ink: var(--mint-ink);
+}
+.hue-sky {
+  --hue: var(--sky);
+  --hue-deep: var(--sky-deep);
+  --hue-ink: var(--sky-ink);
+}
+.hue-grape {
+  --hue: var(--grape);
+  --hue-deep: var(--grape-deep);
+  --hue-ink: var(--grape-ink);
+}
+.hue-bubblegum {
+  --hue: var(--bubblegum);
+  --hue-deep: var(--bubblegum-deep);
+  --hue-ink: var(--bubblegum-ink);
+}
+
+/* Neutral fallback so a component using --hue outside a hue slot still renders. */
+:root {
+  --hue: var(--sky);
+  --hue-deep: var(--sky-deep);
+  --hue-ink: var(--sky-ink);
+}

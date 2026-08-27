@@ -1,0 +1,137 @@
+/*
+ * Sorter tray and bins.
+ *
+ * Bins are large and low on the screen; items sit above them, so the gesture
+ * is a short downward drag rather than a precise cross-screen one.
+ */
+
+.sorter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.sorter__tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: calc(var(--tap-min) + var(--space-4));
+  padding: var(--space-3);
+  background: var(--bg-tint);
+  border-radius: var(--radius-md);
+}
+
+.sorter__item {
+  display: grid;
+  place-items: center;
+  width: calc(var(--tap-min) * 1.15);
+  height: calc(var(--tap-min) * 1.15);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: calc(3px * var(--scale)) solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+
+  /* Required, or a touch drag scrolls the page instead of moving the item. */
+  touch-action: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.sorter__item:hover {
+  transform: scale(1.08);
+}
+
+.sorter__item.is-held {
+  z-index: 20;
+  position: relative;
+  transform: translate3d(var(--drag-x, 0px), var(--drag-y, 0px), 0) scale(1.2);
+  transition: none;
+  box-shadow: var(--shadow-lg);
+  cursor: grabbing;
+}
+
+.sorter__item.is-held-key {
+  transform: scale(1.2);
+  animation: pulse-ring var(--dur-slow) var(--ease-out) infinite;
+}
+
+.sorter__done {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: var(--mint-ink);
+}
+
+/* ---- Bins ------------------------------------------------------------- */
+
+.sorter__bins {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(120px * var(--scale)), 1fr));
+  gap: var(--space-3);
+}
+
+.sorter__bin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+
+  min-height: calc(var(--tap-min) * 2);
+  padding: var(--space-3) var(--space-2);
+
+  background: color-mix(in srgb, var(--hue) 18%, var(--surface));
+  color: var(--hue-ink);
+  border: var(--border-w) dashed var(--hue-deep);
+  border-radius: var(--radius-md);
+
+  transition:
+    transform var(--dur-fast) var(--ease-bounce),
+    border-style var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+/* The box the item would land in — the same signal for pointer and keyboard. */
+.sorter__bin.is-target {
+  border-style: solid;
+  background: color-mix(in srgb, var(--hue) 38%, var(--surface));
+  transform: scale(1.05);
+  outline: calc(5px * var(--scale)) solid var(--ink);
+  outline-offset: 2px;
+}
+
+.sorter__bin.is-happy {
+  animation: pop-in var(--dur) var(--ease-bounce) both;
+}
+
+.sorter__bin-face {
+  display: grid;
+  place-items: center;
+  width: calc(72px * var(--scale));
+  height: calc(72px * var(--scale));
+}
+
+.sorter__bin-label {
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.sorter__bin-count {
+  position: absolute;
+  top: calc(-1 * var(--space-2));
+  right: calc(-1 * var(--space-2));
+  min-width: calc(30px * var(--scale));
+  height: calc(30px * var(--scale));
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--hue);
+  color: var(--hue-ink);
+  border: calc(3px * var(--scale)) solid var(--surface);
+  font-size: var(--fs-sm);
+  font-weight: 900;
+}

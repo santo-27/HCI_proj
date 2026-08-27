@@ -1,0 +1,292 @@
+/*
+ * Styles for the shared UI kit.
+ *
+ * Every value here resolves to a token. In particular each hue-tinted surface
+ * styles against --hue / --hue-deep / --hue-ink, which a `hue-*` class sets on
+ * an ancestor, so text on a bright fill is always the pre-checked ink partner.
+ */
+
+/* ---- BigButton -------------------------------------------------------- */
+
+.big-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+
+  min-height: var(--tap-min);
+  min-width: var(--tap-min);
+  padding: var(--space-3) var(--space-5);
+
+  background: var(--hue);
+  color: var(--hue-ink);
+  border: var(--border-w) solid var(--hue-deep);
+  border-radius: var(--radius-blob);
+
+  font-size: var(--fs-btn);
+  font-weight: 800;
+  text-align: center;
+
+  /* A hard offset shadow, not a blur: it reads as a solid edge to push. */
+  box-shadow: 0 calc(var(--space-2)) 0 0 var(--hue-deep), var(--shadow-md);
+  transform: translateY(0);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-fast) var(--ease-out);
+}
+
+.big-btn:hover {
+  filter: brightness(1.05);
+}
+
+.big-btn:active {
+  /* Sinks onto its own shadow — the button physically compresses. */
+  transform: translateY(var(--space-2));
+  box-shadow: 0 0 0 0 var(--hue-deep), var(--shadow-sm);
+}
+
+.big-btn--block {
+  width: 100%;
+}
+
+.big-btn__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.big-btn__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+}
+
+.big-btn__sub {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.big-btn[aria-pressed="true"] {
+  outline: calc(5px * var(--scale)) solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* ---- IconButton ------------------------------------------------------- */
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  background: var(--surface);
+  border: var(--border-w) solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.icon-btn:hover {
+  background: var(--bg-tint);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+.icon-btn--solid {
+  background: var(--hue);
+  color: var(--hue-ink);
+  border-color: var(--hue-deep);
+}
+
+/* An "off" toggle is drained of colour rather than hidden — the child can
+   still see the control exists and that it is currently silent. */
+.icon-btn.is-off {
+  background: var(--surface-sunk);
+  color: var(--ink-soft);
+}
+
+/* ---- Mascot ----------------------------------------------------------- */
+
+.mascot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.mascot__body {
+  flex: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-1);
+}
+
+.mascot__art {
+  animation: float-bob 3.2s var(--ease-out) infinite;
+}
+
+/* The bob is decoration; the motion toggle stops it dead. */
+:root[data-motion="off"] .mascot__art {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mascot__art {
+    animation: none;
+  }
+}
+
+.mascot__bubble {
+  position: relative;
+  background: var(--surface);
+  border: var(--border-w) solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Bubble tail */
+.mascot__bubble::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-3));
+  top: 50%;
+  width: var(--space-3);
+  height: var(--space-3);
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--surface);
+  border-left: var(--border-w) solid var(--hairline);
+  border-bottom: var(--border-w) solid var(--hairline);
+}
+
+/* ---- StarRow ---------------------------------------------------------- */
+
+.star-row {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  color: var(--sunshine-deep);
+}
+
+.star--off {
+  opacity: 0.16;
+}
+
+.star--on {
+  animation: pop-in var(--dur) var(--ease-bounce) both;
+}
+
+/* ---- Celebration ------------------------------------------------------ */
+
+.celebration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.celebration__confetti {
+  position: absolute;
+  inset: 0;
+}
+
+.confetti {
+  position: absolute;
+  top: -6%;
+  left: var(--x);
+  width: calc(14px * var(--scale));
+  height: calc(20px * var(--scale));
+  border-radius: calc(3px * var(--scale));
+  background: var(--hue);
+  opacity: 0;
+  animation: confetti-fall var(--dur-celebrate) var(--ease-out) var(--delay) both;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--flake-scale, 1));
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift), 105vh, 0) rotate(var(--spin))
+      scale(var(--flake-scale, 1));
+    opacity: 0;
+  }
+}
+
+.celebration__friend {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-5);
+  transform: translateX(-50%);
+  animation: float-bob 2.4s var(--ease-out) infinite;
+}
+
+:root[data-motion="off"] .celebration__friend {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebration__friend {
+    animation: none;
+  }
+}
+
+/* ---- StickerGrid ------------------------------------------------------ */
+
+.sticker-grid {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(96px * var(--scale)), 1fr));
+  gap: var(--space-3);
+}
+
+.sticker {
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-blob);
+  border: var(--border-w) dashed var(--hairline);
+  background: var(--surface-sunk);
+  transition: transform var(--dur-fast) var(--ease-bounce);
+}
+
+.sticker:active {
+  transform: scale(0.94);
+}
+
+.sticker--on {
+  background: color-mix(in srgb, var(--hue) 26%, var(--surface));
+  border-style: solid;
+  border-color: var(--hue-deep);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Not yet earned: present but clearly blank, so the gap is visible. */
+.sticker--off > svg {
+  filter: grayscale(1) opacity(0.28);
+}
+
+.sticker--new {
+  animation: pop-in var(--dur-slow) var(--ease-bounce) both,
+    pulse-ring var(--dur-celebrate) var(--ease-out) 2;
+}
+
+/* ---- SettingsBar ------------------------------------------------------ */
+
+.settings-bar {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}

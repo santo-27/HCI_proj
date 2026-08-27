@@ -1,0 +1,109 @@
+/*
+ * Memory Match board.
+ *
+ * The column count arrives as --cols from the difficulty profile, so the same
+ * markup lays out a 3x2 board for a Little player and a 6x5 one for a Big
+ * player with no per-size CSS.
+ */
+
+.memory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.memory__moves {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.memory__board {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: var(--space-2);
+  width: 100%;
+  /* Keeps a small board from stretching into unreachably large cards on a
+     wide screen, while still filling a phone. */
+  max-width: calc(var(--cols) * 132px * var(--scale));
+}
+
+.card {
+  aspect-ratio: 3 / 4;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  perspective: 900px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.card__inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--dur) var(--ease-bounce);
+}
+
+.card--up .card__inner {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.card__face--back {
+  background: var(--hue);
+  border: var(--border-w) solid var(--hue-deep);
+  box-shadow: var(--shadow-sm);
+}
+
+/* A repeating dot pattern so the backs read as "cards", drawn in the hue's own
+   deep partner rather than a hardcoded colour. */
+.card__pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image: radial-gradient(
+    circle at center,
+    var(--hue-deep) 22%,
+    transparent 23%
+  );
+  background-size: calc(20px * var(--scale)) calc(20px * var(--scale));
+}
+
+.card__face--front {
+  transform: rotateY(180deg);
+  background: var(--surface);
+  border: var(--border-w) solid var(--hue-deep);
+}
+
+/* Found pairs stay visible but step back visually, so what is left to do is
+   the thing that stands out. */
+.card--found .card__face--front {
+  background: color-mix(in srgb, var(--hue) 30%, var(--surface));
+  opacity: 0.85;
+}
+
+.card[aria-disabled="true"] {
+  cursor: default;
+}
+
+.card:not([aria-disabled="true"]):hover .card__inner {
+  transform: scale(1.04);
+}
+
+.card--up:not([aria-disabled="true"]):hover .card__inner {
+  transform: rotateY(180deg) scale(1.04);
+}

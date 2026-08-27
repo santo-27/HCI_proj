@@ -1,0 +1,328 @@
+/*
+ * Screen-level layout. Component styling lives in components/components.css;
+ * this file only arranges things on the page.
+ */
+
+/* ---- Welcome ---------------------------------------------------------- */
+
+.welcome {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-5);
+}
+
+.welcome__top {
+  align-self: flex-end;
+}
+
+.welcome__title {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.95;
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.welcome__title-a {
+  color: var(--coral-deep);
+  transform: rotate(-2deg);
+}
+
+.welcome__title-b {
+  color: var(--sky-deep);
+  transform: rotate(1.5deg);
+}
+
+.welcome__emoji {
+  font-size: calc(46px * var(--scale));
+  line-height: 1;
+}
+
+.welcome__picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.welcome__hint {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+}
+
+/* ---- Home ------------------------------------------------------------- */
+
+.home__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.home__title {
+  font-size: var(--fs-title);
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.home__grid {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  /* auto-fit means the same markup gives two columns on a phone and four on a
+     laptop without a breakpoint per screen size. */
+  grid-template-columns: repeat(auto-fit, minmax(calc(220px * var(--scale)), 1fr));
+  gap: var(--space-4);
+}
+
+.tile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-3);
+  min-height: calc(var(--tap-min) * 3);
+
+  background: var(--surface);
+  border: var(--border-w) solid var(--hue-deep);
+  border-radius: var(--radius-blob);
+  box-shadow: 0 var(--space-2) 0 0 var(--hue-deep), var(--shadow-md);
+  color: var(--ink);
+
+  transition:
+    transform var(--dur) var(--ease-bounce),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.tile:hover {
+  transform: translateY(calc(-1 * var(--space-1)));
+  box-shadow: 0 calc(var(--space-2) + var(--space-1)) 0 0 var(--hue-deep),
+    var(--shadow-lg);
+}
+
+.tile:active {
+  transform: translateY(var(--space-2));
+  box-shadow: 0 0 0 0 var(--hue-deep), var(--shadow-sm);
+}
+
+/* The picture does the work: a big saturated disc a child recognises before
+   they can read the name underneath it. */
+.tile__art {
+  display: grid;
+  place-items: center;
+  width: calc(112px * var(--scale));
+  height: calc(112px * var(--scale));
+  border-radius: var(--radius-pill);
+  background: var(--hue);
+  color: var(--hue-ink);
+  border: var(--border-w) solid var(--hue-deep);
+}
+
+.tile__name {
+  font-size: var(--fs-btn);
+  font-weight: 800;
+}
+
+.tile__blurb {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+}
+
+.tile__stars {
+  margin-top: auto;
+}
+
+.home__footer {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: var(--border-w) solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--fs-body);
+  font-weight: 700;
+}
+
+.chip:hover {
+  background: var(--bg-tint);
+}
+
+.chip--book {
+  background: var(--sunshine);
+  border-color: var(--sunshine-deep);
+  color: var(--sunshine-ink);
+}
+
+.chip__count {
+  font-size: var(--fs-sm);
+  opacity: 0.75;
+}
+
+/* ---- Sticker book ----------------------------------------------------- */
+
+.book__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.book__title {
+  font-size: var(--fs-title);
+  font-weight: 900;
+}
+
+.book__score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: var(--border-w) solid var(--hairline);
+  border-radius: var(--radius-md);
+}
+
+.book__count {
+  font-size: var(--fs-btn);
+  font-weight: 900;
+}
+
+.book__count span {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.book__stars {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-btn);
+}
+
+/* ---- Game shell ------------------------------------------------------- */
+
+.shell {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.shell__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.shell__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--hue-deep);
+}
+
+.shell__title h1 {
+  font-size: var(--fs-title);
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.shell__progress {
+  height: calc(16px * var(--scale));
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunk);
+  border: calc(2px * var(--scale)) solid var(--hairline);
+  overflow: hidden;
+}
+
+.shell__progress-fill {
+  display: block;
+  height: 100%;
+  width: var(--pct);
+  background: var(--hue);
+  border-radius: var(--radius-pill);
+  transition: width var(--dur) var(--ease-out);
+}
+
+.shell__stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+}
+
+/* ---- Win overlay ------------------------------------------------------ */
+
+.win {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: hsl(var(--shadow-color) / 0.45);
+  animation: pop-in var(--dur) var(--ease-out) both;
+}
+
+.win__card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  max-width: 100%;
+
+  background: var(--surface);
+  border: var(--border-w) solid var(--hue-deep);
+  border-radius: var(--radius-blob);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.win__headline {
+  font-size: var(--fs-title);
+  font-weight: 900;
+  color: var(--hue-deep);
+}
+
+.win__sticker-note {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.win__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}

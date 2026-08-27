@@ -1,0 +1,80 @@
+/*
+ * Copy the Tune.
+ *
+ * A pad has exactly two looks — resting and lit — and the difference is large:
+ * brightness, scale and a ring all change at once. A subtle highlight is no
+ * use to a four-year-old watching from across a table.
+ */
+
+.sequence {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.sequence__status {
+  font-size: var(--fs-btn);
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.sequence__round {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.sequence__pads {
+  display: grid;
+  /* Two rows of pads, however many there are: 4 becomes 2x2, 6 becomes 3x2. */
+  grid-template-columns: repeat(var(--pad-cols), 1fr);
+  gap: var(--space-3);
+  width: min(100%, calc(440px * var(--scale)));
+}
+
+.pad {
+  aspect-ratio: 1;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  display: grid;
+  place-items: center;
+
+  background: color-mix(in srgb, var(--hue) 55%, var(--surface));
+  border: var(--border-w) solid var(--hue-deep);
+  border-radius: var(--radius-blob);
+  box-shadow: 0 var(--space-2) 0 0 var(--hue-deep);
+
+  filter: saturate(0.65) brightness(0.97);
+  transition:
+    transform var(--dur-fast) var(--ease-bounce),
+    filter var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+/* Lit is unmistakable: full colour, bigger, and ringed. */
+.pad.is-lit {
+  background: var(--hue);
+  filter: saturate(1.35) brightness(1.12);
+  transform: scale(1.08);
+  box-shadow:
+    0 var(--space-2) 0 0 var(--hue-deep),
+    0 0 0 calc(8px * var(--scale)) color-mix(in srgb, var(--hue) 45%, transparent);
+}
+
+/* Inert during playback, but never faded out — the pads must stay readable
+   while the child is watching the pattern being played on them. */
+.pad[aria-disabled="true"] {
+  cursor: default;
+}
+
+.pad:not([aria-disabled="true"]):hover {
+  transform: translateY(calc(-1 * var(--space-1)));
+}
+
+.pad:not([aria-disabled="true"]):active {
+  transform: translateY(var(--space-2));
+  box-shadow: 0 0 0 0 var(--hue-deep);
+}
