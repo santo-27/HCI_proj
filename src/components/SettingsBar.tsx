@@ -13,8 +13,6 @@
 import { useProfile } from "../context/profile";
 import { IconButton } from "./IconButton";
 import {
-  IconMotionOff,
-  IconMotionOn,
   IconSoundOff,
   IconSoundOn,
   IconVoiceOff,
@@ -39,12 +37,12 @@ export function SettingsBar({ className = "" }: { className?: string }) {
         active={settings.voice}
         onClick={() => toggleSetting("voice")}
       />
-      <IconButton
+      {/* <IconButton
         label={settings.motion ? "Movement on" : "Movement off"}
         icon={settings.motion ? <IconMotionOn /> : <IconMotionOff />}
         active={settings.motion}
         onClick={() => toggleSetting("motion")}
-      />
+      /> */}
     </div>
   );
 }

@@ -31,7 +31,7 @@ export function StickerBookScreen({ onBack }: { onBack: () => void }) {
   return (
     <div className="screen book">
       <header className="book__bar">
-        <IconButton label="Back to the games" icon={<IconBack />} onClick={onBack} />
+        <IconButton label="Go back" icon={<IconBack />} onClick={onBack} />
         <h1 className="book__title">Sticker Book</h1>
       </header>
 

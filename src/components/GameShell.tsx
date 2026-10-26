@@ -30,9 +30,10 @@ import "./components.css";
 interface GameShellProps {
   game: GameDefinition;
   onExit: () => void;
+  onHome: () => void;
 }
 
-export function GameShell({ game, onExit }: GameShellProps) {
+export function GameShell({ game, onExit, onHome }: GameShellProps) {
   const { profile, recordWin } = useProfile();
 
   const [round, setRound] = useState(0);
@@ -88,7 +89,7 @@ export function GameShell({ game, onExit }: GameShellProps) {
   return (
     <div className={`shell ${hueClass(game.hue)}`}>
       <header className="shell__bar">
-        <IconButton label="Back to the games" icon={<IconBack />} onClick={onExit} />
+        <IconButton label="Go back" icon={<IconBack />} onClick={onExit} />
 
         <div className="shell__title">
           <game.Icon size={34} />
@@ -149,7 +150,7 @@ export function GameShell({ game, onExit }: GameShellProps) {
                 label="Home"
                 hue="sunshine"
                 icon={<IconHome size={30} />}
-                onClick={onExit}
+                onClick={onHome}
               />
             </div>
           </div>

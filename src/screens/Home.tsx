@@ -8,27 +8,22 @@
  */
 
 import type { GameId } from "../lib/difficulty";
-import { AGE_GROUP_META } from "../lib/difficulty";
 import { GAMES } from "../games/registry";
 import { useProfile } from "../context/profile";
 import { hueClass } from "../lib/hues";
 import { StarRow } from "../components/StarRow";
 import { SettingsBar } from "../components/SettingsBar";
-import { IconSticker } from "../art/icons";
 import { playTap, unlockAudio } from "../lib/audio";
 import { speak } from "../lib/speech";
 import "./screens.css";
 
 interface HomeProps {
   onPlay: (id: GameId) => void;
-  onStickers: () => void;
-  onChangeAge: () => void;
 }
 
-export function Home({ onPlay, onStickers, onChangeAge }: HomeProps) {
-  const { profile, progress, stickers, age } = useProfile();
+export function Home({ onPlay }: HomeProps) {
+  const { profile, progress } = useProfile();
   const withWords = profile.labelMode === "icon-and-text";
-  const meta = age ? AGE_GROUP_META[age] : null;
 
   return (
     <div className="screen home">
@@ -75,25 +70,6 @@ export function Home({ onPlay, onStickers, onChangeAge }: HomeProps) {
         })}
       </ul>
 
-      <footer className="home__footer">
-        <button type="button" className="chip chip--book" onClick={onStickers}>
-          <IconSticker size={30} />
-          <span>Sticker book</span>
-          <span className="chip__count">{stickers.length} / 16</span>
-        </button>
-
-        {meta && (
-          <button
-            type="button"
-            className="chip"
-            onClick={onChangeAge}
-            aria-label={`Playing as ${meta.label}, ages ${meta.ages}. Tap to change.`}
-          >
-            <span aria-hidden="true">{meta.emoji}</span>
-            <span>{meta.label}</span>
-          </button>
-        )}
-      </footer>
     </div>
   );
 }

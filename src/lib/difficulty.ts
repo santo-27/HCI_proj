@@ -10,7 +10,7 @@
 
 export type AgeGroup = "little" | "medium" | "big";
 
-export type GameId = "memory" | "jigsaw" | "sorter" | "sequence";
+export type GameId = "memory" | "jigsaw" | "sorter" | "sequence" | "reading";
 
 export const AGE_GROUPS: readonly AgeGroup[] = ["little", "medium", "big"];
 
@@ -64,6 +64,10 @@ export interface SequenceConfig {
   gapMs: number;
 }
 
+export interface ReadingConfig {
+  words: readonly string[];
+}
+
 export interface DifficultyProfile {
   /** Icon-only for pre-readers; the older groups get words alongside. */
   labelMode: "icon" | "icon-and-text";
@@ -71,6 +75,7 @@ export interface DifficultyProfile {
   jigsaw: JigsawConfig;
   sorter: SorterConfig;
   sequence: SequenceConfig;
+  reading: ReadingConfig;
 }
 
 /* ---- The table -------------------------------------------------------- */
@@ -82,6 +87,7 @@ export const DIFFICULTY: Record<AgeGroup, DifficultyProfile> = {
     jigsaw: { columns: 2, rows: 2, snapRadius: 110, showGhosts: true },
     sorter: { rule: "color", binCount: 3, itemCount: 6 },
     sequence: { padCount: 4, startLength: 2, targetLength: 5, litMs: 620, gapMs: 260 },
+    reading: { words: ["cat", "sun", "red", "fish", "tree"] },
   },
   medium: {
     labelMode: "icon-and-text",
@@ -89,6 +95,7 @@ export const DIFFICULTY: Record<AgeGroup, DifficultyProfile> = {
     jigsaw: { columns: 3, rows: 3, snapRadius: 70, showGhosts: true },
     sorter: { rule: "shape", binCount: 4, itemCount: 8 },
     sequence: { padCount: 4, startLength: 3, targetLength: 8, litMs: 460, gapMs: 180 },
+    reading: { words: ["little", "yellow", "happy", "garden", "rocket", "friend"] },
   },
   big: {
     labelMode: "icon-and-text",
@@ -96,6 +103,7 @@ export const DIFFICULTY: Record<AgeGroup, DifficultyProfile> = {
     jigsaw: { columns: 6, rows: 6, snapRadius: 42, showGhosts: false },
     sorter: { rule: "both", binCount: 5, itemCount: 12 },
     sequence: { padCount: 6, startLength: 4, targetLength: 10, litMs: 380, gapMs: 140 },
+    reading: { words: ["adventure", "wonderful", "rainbow", "elephant", "playground", "together"] },
   },
 };
 

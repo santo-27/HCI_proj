@@ -66,7 +66,7 @@ export function Welcome({ onPicked }: { onPicked: () => void }) {
         })}
       </div>
 
-      <p className="welcome__hint">You can change this any time.</p>
+      
     </div>
   );
 }

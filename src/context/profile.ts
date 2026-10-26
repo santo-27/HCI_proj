@@ -23,6 +23,7 @@ export const EMPTY_PROGRESS: ProgressState = {
   jigsaw: { plays: 0, bestStars: 0 },
   sorter: { plays: 0, bestStars: 0 },
   sequence: { plays: 0, bestStars: 0 },
+  reading: { plays: 0, bestStars: 0 },
 };
 
 export interface Settings {

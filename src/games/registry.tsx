@@ -17,6 +17,7 @@ import type { Hue } from "../lib/hues";
 import {
   IconJigsaw,
   IconMemory,
+  IconReading,
   IconSequence,
   IconSorter,
 } from "../art/icons";
@@ -24,6 +25,7 @@ import { MemoryMatch } from "./memory/MemoryMatch";
 import { Jigsaw } from "./jigsaw/Jigsaw";
 import { Sorter } from "./sorter/Sorter";
 import { Sequence } from "./sequence/Sequence";
+import { ReadAloud } from "./reading/ReadAloud";
 
 export interface WinResult {
   stars: 1 | 2 | 3;
@@ -132,6 +134,24 @@ export const GAMES: readonly GameDefinition[] = [
       <Sequence
         key={round}
         config={profile.sequence}
+        onWin={onWin}
+        onProgress={onProgress}
+      />
+    ),
+  },
+  {
+    id: "reading",
+    title: "Read Aloud",
+    blurb: "Say the word you see",
+    hue: "sunshine",
+    Icon: IconReading,
+    narration: "Read Aloud. Look at the word, then say it into the microphone.",
+    howTo: "Read the word, then tap the microphone and say it.",
+    guide: "fox",
+    render: ({ profile, onWin, onProgress, round }) => (
+      <ReadAloud
+        key={round}
+        config={profile.reading}
         onWin={onWin}
         onProgress={onProgress}
       />

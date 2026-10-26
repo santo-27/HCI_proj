@@ -186,3 +186,13 @@ export function IconSequence(props: IconProps) {
     </Svg>
   );
 }
+
+export function IconReading(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v16H6.5A2.5 2.5 0 0 0 4 21z" />
+      <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v16h5.5A2.5 2.5 0 0 1 20 21z" />
+      <path d="M7 7h2.5M15 7h2M7 11h2.5M15 11h2" />
+    </Svg>
+  );
+}
