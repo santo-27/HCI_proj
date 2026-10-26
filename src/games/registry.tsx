@@ -28,7 +28,6 @@ import { Sequence } from "./sequence/Sequence";
 import { ReadAloud } from "./reading/ReadAloud";
 
 export interface WinResult {
-  stars: 1 | 2 | 3;
   /** Optional line the shell speaks alongside the celebration. */
   message?: string;
 }

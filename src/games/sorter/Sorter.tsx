@@ -19,7 +19,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { GameProps } from "../registry";
 import type { SorterConfig } from "../../lib/difficulty";
-import { starsForEffort } from "../../lib/difficulty";
 import type { ShapeId } from "../../art/shapes";
 import { SHAPES, SHAPE_NAMES, Shape } from "../../art/shapes";
 import type { Hue } from "../../lib/hues";
@@ -122,7 +121,6 @@ export function Sorter({ config, onWin, onProgress }: GameProps<SorterConfig>) {
   const items = useMemo(() => buildItems(config, bins), [config, bins]);
 
   const [sorted, setSorted] = useState<string[]>([]);
-  const [attempts, setAttempts] = useState(0);
   const [wrongItem, setWrongItem] = useState<string | null>(null);
   const [flashBin, setFlashBin] = useState<string | null>(null);
 
@@ -136,7 +134,6 @@ export function Sorter({ config, onWin, onProgress }: GameProps<SorterConfig>) {
     (itemId: string, binId: string | null) => {
       if (!binId) return;
 
-      setAttempts((a) => a + 1);
       const item = itemById(itemId);
 
       if (item.binId === binId) {
@@ -182,7 +179,7 @@ export function Sorter({ config, onWin, onProgress }: GameProps<SorterConfig>) {
     if (sorted.length !== items.length || items.length === 0) return;
     speak("Everything is sorted!");
     const timer = window.setTimeout(
-      () => onWin({ stars: starsForEffort(items.length, attempts) }),
+      () => onWin({}),
       500,
     );
     return () => window.clearTimeout(timer);

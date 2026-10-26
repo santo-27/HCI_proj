@@ -14,12 +14,6 @@
   width: 100%;
 }
 
-.memory__moves {
-  font-size: var(--fs-body);
-  font-weight: 700;
-  color: var(--ink-soft);
-}
-
 .memory__board {
   display: grid;
   grid-template-columns: repeat(var(--cols), 1fr);

@@ -90,13 +90,11 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const recordWin = useCallback(
-    (game: GameId, stars: 1 | 2 | 3): WinRecord => {
+    (game: GameId): WinRecord => {
       setProgress((prev) => ({
         ...prev,
         [game]: {
           plays: prev[game].plays + 1,
-          // Stars only ever go up. Nothing in this app takes a reward away.
-          bestStars: Math.max(prev[game].bestStars, stars) as 1 | 2 | 3,
         },
       }));
 
@@ -107,7 +105,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       const awarded = unearned.length ? sample(unearned, 1)[0].id : null;
       if (awarded) setStickers((prev) => [...prev, awarded]);
 
-      return { stars, sticker: awarded };
+      return { sticker: awarded };
     },
     [stickers],
   );
@@ -119,15 +117,6 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     setAgeState(null);
   }, []);
 
-  const totalStars = useMemo(
-    () =>
-      Object.values(progress).reduce(
-        (sum, entry) => sum + entry.bestStars,
-        0,
-      ),
-    [progress],
-  );
-
   const value = useMemo<ProfileValue>(
     () => ({
       age,
@@ -137,7 +126,6 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       toggleSetting,
       progress,
       stickers,
-      totalStars,
       recordWin,
       resetEverything,
     }),
@@ -148,7 +136,6 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       toggleSetting,
       progress,
       stickers,
-      totalStars,
       recordWin,
       resetEverything,
     ],

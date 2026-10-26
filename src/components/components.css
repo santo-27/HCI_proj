@@ -121,7 +121,9 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-2) var(--space-4);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--surface) 32%, transparent);
+  -webkit-backdrop-filter: blur(var(--blur-bar));
+  backdrop-filter: blur(var(--blur-bar));
   border-bottom: var(--border-w) solid var(--hairline);
   box-shadow: var(--shadow-sm);
   z-index: 1;
@@ -141,6 +143,11 @@
   font-weight: 800;
 }
 
+.task-bar__home-logo {
+  width: calc(34px * var(--scale));
+  height: calc(34px * var(--scale));
+}
+
 .task-bar__item:hover {
   background: var(--bg-tint);
 }
@@ -152,6 +159,13 @@
 }
 
 .task-bar__item--age {
+  margin-left: 0;
+}
+
+.task-bar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   margin-left: auto;
 }
 
@@ -212,8 +226,6 @@
   border-left: var(--border-w) solid var(--hairline);
   border-bottom: var(--border-w) solid var(--hairline);
 }
-
-/* ---- StarRow ---------------------------------------------------------- */
 
 .star-row {
   display: flex;

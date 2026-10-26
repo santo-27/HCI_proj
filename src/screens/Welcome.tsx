@@ -15,7 +15,6 @@ import type { Hue } from "../lib/hues";
 import { useProfile } from "../context/profile";
 import { BigButton } from "../components/BigButton";
 import { Mascot } from "../components/Mascot";
-import { SettingsBar } from "../components/SettingsBar";
 import { speak } from "../lib/speech";
 import "./screens.css";
 
@@ -38,10 +37,6 @@ export function Welcome({ onPicked }: { onPicked: () => void }) {
 
   return (
     <div className="screen welcome">
-      <div className="welcome__top">
-        <SettingsBar />
-      </div>
-
       <h1 className="welcome__title">
         <span className="welcome__title-a">Puzzle</span>
         <span className="welcome__title-b">Playground</span>

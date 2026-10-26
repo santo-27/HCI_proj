@@ -78,7 +78,6 @@ function Router() {
   };
 
   const goWelcome = () => navigate({ k: "welcome" });
-  const goBack = () => window.history.back();
   const openGameChooser = () => navigate({ k: "games" });
 
   switch (view.k) {
@@ -112,7 +111,7 @@ function Router() {
             onStickers={() => navigate({ k: "stickers" })}
             onChangeAge={() => navigate({ k: "welcome" })}
           />
-          <GameScreen id={view.id} onExit={goBack} onHome={goWelcome} />
+          <GameScreen id={view.id} onHome={goWelcome} />
         </>
       );
     case "stickers":
@@ -123,7 +122,7 @@ function Router() {
             onStickers={() => navigate({ k: "stickers" })}
             onChangeAge={() => navigate({ k: "welcome" })}
           />
-          <StickerBookScreen onBack={goBack} />
+          <StickerBookScreen />
         </>
       );
   }

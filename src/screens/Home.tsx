@@ -11,8 +11,6 @@ import type { GameId } from "../lib/difficulty";
 import { GAMES } from "../games/registry";
 import { useProfile } from "../context/profile";
 import { hueClass } from "../lib/hues";
-import { StarRow } from "../components/StarRow";
-import { SettingsBar } from "../components/SettingsBar";
 import { playTap, unlockAudio } from "../lib/audio";
 import { speak } from "../lib/speech";
 import "./screens.css";
@@ -29,12 +27,10 @@ export function Home({ onPlay }: HomeProps) {
     <div className="screen home">
       <header className="home__bar">
         <h1 className="home__title">Puzzle Playground</h1>
-        <SettingsBar />
       </header>
 
       <ul className="home__grid">
         {GAMES.map((game) => {
-          const best = progress[game.id].bestStars;
           return (
             <li key={game.id}>
               <button
@@ -48,8 +44,8 @@ export function Home({ onPlay }: HomeProps) {
                 // The tile is a picture for pre-readers, so the full name and
                 // its best score are spelled out for assistive tech.
                 aria-label={
-                  best !== 0
-                    ? `${game.title}. Best: ${best} of 3 stars.`
+                  progress[game.id].plays > 0
+                    ? `${game.title}. Played before.`
                     : `${game.title}. Not played yet.`
                 }
                 onFocus={() => speak(game.title)}
@@ -59,11 +55,6 @@ export function Home({ onPlay }: HomeProps) {
                 </span>
                 <span className="tile__name">{game.title}</span>
                 {withWords && <span className="tile__blurb">{game.blurb}</span>}
-                {best !== 0 && (
-                  <span className="tile__stars">
-                    <StarRow stars={best} size={24} />
-                  </span>
-                )}
               </button>
             </li>
           );

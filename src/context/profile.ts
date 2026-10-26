@@ -12,18 +12,16 @@ import type { AgeGroup, DifficultyProfile, GameId } from "../lib/difficulty";
 
 export interface GameProgress {
   plays: number;
-  /** Best result ever, never overwritten by a worse one. 0 means unplayed. */
-  bestStars: 0 | 1 | 2 | 3;
 }
 
 export type ProgressState = Record<GameId, GameProgress>;
 
 export const EMPTY_PROGRESS: ProgressState = {
-  memory: { plays: 0, bestStars: 0 },
-  jigsaw: { plays: 0, bestStars: 0 },
-  sorter: { plays: 0, bestStars: 0 },
-  sequence: { plays: 0, bestStars: 0 },
-  reading: { plays: 0, bestStars: 0 },
+  memory: { plays: 0 },
+  jigsaw: { plays: 0 },
+  sorter: { plays: 0 },
+  sequence: { plays: 0 },
+  reading: { plays: 0 },
 };
 
 export interface Settings {
@@ -40,7 +38,6 @@ export const DEFAULT_SETTINGS: Settings = {
 };
 
 export interface WinRecord {
-  stars: 1 | 2 | 3;
   /** The creature sticker awarded, or null once the book is full. */
   sticker: string | null;
 }
@@ -56,10 +53,8 @@ export interface ProfileValue {
 
   progress: ProgressState;
   stickers: readonly string[];
-  totalStars: number;
-
   /** Records a finished game and hands back the sticker it earned. */
-  recordWin: (game: GameId, stars: 1 | 2 | 3) => WinRecord;
+  recordWin: (game: GameId) => WinRecord;
   resetEverything: () => void;
 }
 

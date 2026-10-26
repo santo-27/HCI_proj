@@ -28,10 +28,7 @@ export function ReadAloud({ config, onWin, onProgress }: GameProps<ReadingConfig
   function nextWord() {
     const nextIndex = wordIndex + 1;
     if (nextIndex >= config.words.length) {
-      onWin({
-        stars: mistakes.current === 0 ? 3 : mistakes.current < 3 ? 2 : 1,
-        message: "Wonderful reading!",
-      });
+      onWin({ message: "Wonderful reading!" });
       return;
     }
     setWordIndex(nextIndex);
