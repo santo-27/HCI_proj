@@ -17,6 +17,7 @@ import { BigButton } from "../components/BigButton";
 import { Mascot } from "../components/Mascot";
 import { speak } from "../lib/speech";
 import "./screens.css";
+import { CreatureBackground } from "../components/CreatureBackground";
 
 const GREETING = "Hello! How old are you? Tap your picture.";
 
@@ -37,6 +38,7 @@ export function Welcome({ onPicked }: { onPicked: () => void }) {
 
   return (
     <div className="screen welcome">
+      <CreatureBackground />
       <h1 className="welcome__title">
         <span className="welcome__title-a">Puzzle</span>
         <span className="welcome__title-b">Playground</span>

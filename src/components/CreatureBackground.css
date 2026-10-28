@@ -1,0 +1,64 @@
+
+.creature-background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.creature-background__animal {
+  position: absolute;
+  opacity: 0.22;
+  transform: translate(-50%, -50%);
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: translate;
+}
+
+.creature-background__animal--up {
+  animation-name: move-up;
+}
+
+.creature-background__animal--down {
+  animation-name: move-down;
+}
+
+@keyframes move-up {
+  from {
+    translate: 0 14px;
+  }
+
+  to {
+    translate: 0 -14px;
+  }
+}
+
+@keyframes move-down {
+  from {
+    translate: 0 -14px;
+  }
+
+  to {
+    translate: 0 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .creature-background__animal {
+    opacity: 0.14;
+  }
+
+  .creature-background__animal svg {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .creature-background__animal {
+    animation: none;
+  }
+}
