@@ -3,7 +3,7 @@ import type { GameProps } from "../registry";
 import type { ReadingConfig } from "../../lib/difficulty";
 import { listenForWord } from "../../lib/recognition";
 import { speak } from "../../lib/speech";
-import { IconVoiceOn } from "../../art/icons";
+import { IconSoundOn } from "../../art/icons";
 import { BigButton } from "../../components/BigButton";
 import { hueClass } from "../../lib/hues";
 import "./reading.css";
@@ -83,7 +83,7 @@ export function ReadAloud({ config, onWin, onProgress }: GameProps<ReadingConfig
       <p className="reading__status" aria-live="polite">{status}</p>
       <BigButton
         label={listening ? "Listening..." : "Read it aloud"}
-        icon={<IconVoiceOn size={38} />}
+        icon={<IconSoundOn size={38} />}
         hue="coral"
         onClick={startListening}
         selected={listening}

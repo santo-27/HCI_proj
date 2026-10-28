@@ -43,6 +43,9 @@ export function Welcome({ onPicked }: { onPicked: () => void }) {
         <span className="welcome__title-a">Puzzle</span>
         <span className="welcome__title-b">Playground</span>
       </h1>
+      <p className="welcome__subtitle">
+        Play games and collect sticker friends!
+      </p>
 
       <Mascot line={GREETING} creature="bunny" size={120} />
 

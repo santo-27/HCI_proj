@@ -315,3 +315,12 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.welcome__subtitle {
+  margin: 8px 0 16px;
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  color: #7b5b91;
+  line-height: 1.5;
+}
