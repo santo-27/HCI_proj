@@ -91,6 +91,18 @@ export function IconBellOn(props: IconProps) {
   );
 }
 
+/** A microphone with sound waves: "talk to the app", distinct from narration. */
+export function IconListen(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M12 4a2.5 2.5 0 0 1 2.5 2.5v4.5a2.5 2.5 0 0 1-5 0V6.5A2.5 2.5 0 0 1 12 4z" />
+      <path d="M7 10.5a5 5 0 0 0 10 0" />
+      <path d="M12 15.5V19" />
+      <path d="M3.5 8.5v4M20.5 8.5v4" />
+    </Svg>
+  );
+}
+
 export function IconBellOff(props: IconProps) {
   return (
     <Svg {...props}>

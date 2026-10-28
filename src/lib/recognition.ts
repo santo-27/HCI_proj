@@ -1,5 +1,7 @@
 export interface RecognitionResult {
   transcript: string;
+  /** Every guess the recogniser offered, best first. Includes `transcript`. */
+  alternatives: string[];
 }
 
 interface RecognitionEvent {
@@ -10,6 +12,7 @@ interface RecognitionInstance {
   lang: string;
   continuous: boolean;
   interimResults: boolean;
+  maxAlternatives: number;
   onresult: ((event: RecognitionEvent) => void) | null;
   onerror: (() => void) | null;
   onend: (() => void) | null;
@@ -48,8 +51,12 @@ export function listenForWord(
   recognition.lang = "en-US";
   recognition.continuous = false;
   recognition.interimResults = false;
+  // Children's speech is often misheard on the first guess; asking for a few
+  // lets command matching look past it. Single-word reading still uses [0].
+  recognition.maxAlternatives = 5;
   recognition.onresult = (event) => {
-    onResult({ transcript: event.results[0][0].transcript });
+    const alternatives = Array.from(event.results[0], (alt) => alt.transcript);
+    onResult({ transcript: alternatives[0] ?? "", alternatives });
   };
   recognition.onerror = onError;
   recognition.onend = onDone;

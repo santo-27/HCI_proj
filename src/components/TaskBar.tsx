@@ -3,15 +3,18 @@ import { useProfile } from "../context/profile";
 import { IconSticker } from "../art/icons";
 import { IconButton } from "./IconButton";
 import { SettingsBar } from "./SettingsBar";
+import { VoiceCommandButton } from "./VoiceCommandButton";
+import type { VoiceCommand } from "../lib/voiceCommands";
 import "./components.css";
 
 interface TaskBarProps {
   onHome: () => void;
   onStickers: () => void;
   onChangeAge: () => void;
+  onVoiceCommand: (command: VoiceCommand) => void;
 }
 
-export function TaskBar({ onHome, onStickers, onChangeAge }: TaskBarProps) {
+export function TaskBar({ onHome, onStickers, onChangeAge, onVoiceCommand }: TaskBarProps) {
   const { age, stickers } = useProfile();
   const meta = age ? AGE_GROUP_META[age] : null;
 
@@ -22,6 +25,8 @@ export function TaskBar({ onHome, onStickers, onChangeAge }: TaskBarProps) {
         icon={<img className="task-bar__home-logo" src="/favicon.svg" alt="" />}
         onClick={onHome}
       />
+
+      <VoiceCommandButton onCommand={onVoiceCommand} />
 
       <div className="task-bar__right">
         {meta && (

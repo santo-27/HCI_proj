@@ -42,6 +42,17 @@ the checklist at the bottom, which is the real acceptance gate.
 | `src/screens/*` | Welcome, Home, GameScreen, StickerBookScreen. |
 | `src/games/*/` | MemoryMatch, Jigsaw, Sorter, Sequence. |
 
+**Voice commands**
+
+| File | Role |
+| --- | --- |
+| `src/lib/voiceCommands.ts` | Keyword parser: transcript → `VoiceCommand`. Game names come from the registry (`title` + `voiceWords`). |
+| `src/components/VoiceCommandButton.tsx` | Task-bar mic. Listens, parses, hands the command to `App.tsx`, which does the navigation. Hidden where SpeechRecognition is missing. |
+
+A new game needs a `voiceWords` list in its registry entry; nothing else.
+Chrome's recogniser sends audio to Google, so voice commands (like Read Aloud)
+do not work offline there — every other feature still does.
+
 ## Deviations from CLAUDE.md worth knowing
 
 - **`registry.tsx`, not `registry.ts`.** Its `render` entries return JSX, which
@@ -87,5 +98,7 @@ Run `npm run dev` and:
 - [ ] Motion toggle **and** OS reduce-motion each kill all animation.
 - [ ] Make deliberate wrong moves everywhere: wiggle, soft tone, retry. No fail
       state, no score decrease, nothing consumed.
+- [ ] Voice: tap the task-bar mic and say "open jigsaw", "sticker book",
+      "go home", "sound off", "I'm big", "help", and some nonsense.
 - [ ] Touch, at phone width: drag in Jigsaw and Sorter without the page
       scrolling underneath.
