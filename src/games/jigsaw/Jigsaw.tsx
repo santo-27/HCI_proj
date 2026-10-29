@@ -15,7 +15,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { GameProps } from "../registry";
 import type { JigsawConfig } from "../../lib/difficulty";
-import { starsForEffort } from "../../lib/difficulty";
 import { CREATURES } from "../../art/creatures";
 import type { CreatureSpec } from "../../art/creatures";
 import { PUZZLE_VIEW, PuzzleScene } from "../../art/puzzle";
@@ -79,7 +78,6 @@ export function Jigsaw({ config, onWin, onProgress }: GameProps<JigsawConfig>) {
     shuffle(pieces.map((p) => p.id)),
   );
   const [placed, setPlaced] = useState<string[]>([]);
-  const [attempts, setAttempts] = useState(0);
   const [wrongPiece, setWrongPiece] = useState<string | null>(null);
 
   const cellIds = useMemo(
@@ -106,7 +104,6 @@ export function Jigsaw({ config, onWin, onProgress }: GameProps<JigsawConfig>) {
       // simply changed their mind.
       if (!cellId) return;
 
-      setAttempts((a) => a + 1);
       const piece = pieceById(pieceId);
       const home = `c-${piece.row}-${piece.col}`;
 
@@ -143,7 +140,7 @@ export function Jigsaw({ config, onWin, onProgress }: GameProps<JigsawConfig>) {
     if (placed.length !== pieces.length || pieces.length === 0) return;
     speak("The picture is finished!");
     const timer = window.setTimeout(
-      () => onWin({ stars: starsForEffort(pieces.length, attempts) }),
+      () => onWin({}),
       500,
     );
     return () => window.clearTimeout(timer);

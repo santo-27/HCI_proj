@@ -15,7 +15,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { GameProps } from "../registry";
 import type { MemoryConfig } from "../../lib/difficulty";
-import { starsForEffort } from "../../lib/difficulty";
 import { CREATURES, Creature } from "../../art/creatures";
 import type { CreatureSpec } from "../../art/creatures";
 import { hueAt, hueClass } from "../../lib/hues";
@@ -61,7 +60,6 @@ export function MemoryMatch({
   const [flipped, setFlipped] = useState<string[]>([]);
   const [matched, setMatched] = useState<string[]>([]);
   const [wrong, setWrong] = useState<string[]>([]);
-  const [moves, setMoves] = useState(0);
 
   // A lock, not a state flag: it must be readable synchronously inside the
   // click handler or a fast child can flip a third card during the peek.
@@ -87,11 +85,8 @@ export function MemoryMatch({
 
   useEffect(() => {
     if (matchedPairs !== pairCount || pairCount === 0) return;
-    // Every pair takes at least one move; that is the "perfect" run.
-    later(() => onWin({ stars: starsForEffort(pairCount, moves) }), 450);
-    // `moves` is deliberately not a dependency: this fires once, on the move
-    // that completed the board, and re-running it on a later change would
-    // award a second win.
+    later(() => onWin({}), 450);
+    // This fires once, on the move that completed the board.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchedPairs, pairCount]);
 
@@ -140,7 +135,6 @@ export function MemoryMatch({
     setFlipped(next);
     if (next.length < 2) return;
 
-    setMoves((m) => m + 1);
     busy.current = true;
 
     const [firstKey, secondKey] = next;
@@ -173,12 +167,6 @@ export function MemoryMatch({
 
   return (
     <div className="memory">
-      {config.showMoveCounter && (
-        <p className="memory__moves" aria-live="polite">
-          Turns: <strong>{moves}</strong>
-        </p>
-      )}
-
       <div
         className="memory__board"
         style={cssVars({ "--cols": config.columns })}

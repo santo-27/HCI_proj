@@ -10,7 +10,7 @@
 
 export type AgeGroup = "little" | "medium" | "big";
 
-export type GameId = "memory" | "jigsaw" | "sorter" | "sequence";
+export type GameId = "memory" | "jigsaw" | "sorter" | "sequence" | "reading";
 
 export const AGE_GROUPS: readonly AgeGroup[] = ["little", "medium", "big"];
 
@@ -36,7 +36,6 @@ export interface MemoryConfig {
   rows: number;
   /** How long a mismatched pair stays face-up before flipping back. */
   peekMs: number;
-  showMoveCounter: boolean;
 }
 
 export interface JigsawConfig {
@@ -64,6 +63,10 @@ export interface SequenceConfig {
   gapMs: number;
 }
 
+export interface ReadingConfig {
+  words: readonly string[];
+}
+
 export interface DifficultyProfile {
   /** Icon-only for pre-readers; the older groups get words alongside. */
   labelMode: "icon" | "icon-and-text";
@@ -71,6 +74,7 @@ export interface DifficultyProfile {
   jigsaw: JigsawConfig;
   sorter: SorterConfig;
   sequence: SequenceConfig;
+  reading: ReadingConfig;
 }
 
 /* ---- The table -------------------------------------------------------- */
@@ -78,24 +82,27 @@ export interface DifficultyProfile {
 export const DIFFICULTY: Record<AgeGroup, DifficultyProfile> = {
   little: {
     labelMode: "icon",
-    memory: { columns: 3, rows: 2, peekMs: 1500, showMoveCounter: false },
+    memory: { columns: 3, rows: 2, peekMs: 1500 },
     jigsaw: { columns: 2, rows: 2, snapRadius: 110, showGhosts: true },
     sorter: { rule: "color", binCount: 3, itemCount: 6 },
     sequence: { padCount: 4, startLength: 2, targetLength: 5, litMs: 620, gapMs: 260 },
+    reading: { words: ["cat", "sun", "red", "fish", "tree"] },
   },
   medium: {
     labelMode: "icon-and-text",
-    memory: { columns: 4, rows: 4, peekMs: 1000, showMoveCounter: true },
+    memory: { columns: 4, rows: 4, peekMs: 1000 },
     jigsaw: { columns: 3, rows: 3, snapRadius: 70, showGhosts: true },
     sorter: { rule: "shape", binCount: 4, itemCount: 8 },
     sequence: { padCount: 4, startLength: 3, targetLength: 8, litMs: 460, gapMs: 180 },
+    reading: { words: ["little", "yellow", "happy", "garden", "rocket", "friend"] },
   },
   big: {
     labelMode: "icon-and-text",
-    memory: { columns: 6, rows: 5, peekMs: 800, showMoveCounter: true },
+    memory: { columns: 6, rows: 5, peekMs: 800 },
     jigsaw: { columns: 6, rows: 6, snapRadius: 42, showGhosts: false },
     sorter: { rule: "both", binCount: 5, itemCount: 12 },
     sequence: { padCount: 6, startLength: 4, targetLength: 10, litMs: 380, gapMs: 140 },
+    reading: { words: ["adventure", "wonderful", "rainbow", "elephant", "playground", "together"] },
   },
 };
 
@@ -103,14 +110,3 @@ export function profileFor(age: AgeGroup): DifficultyProfile {
   return DIFFICULTY[age];
 }
 
-/**
- * Converts performance into 1-3 stars.
- *
- * The floor is deliberately 1, never 0: finishing a puzzle always earns
- * something. Stars reward efficiency, they don't punish struggle.
- */
-export function starsForEffort(perfectMoves: number, actualMoves: number): 1 | 2 | 3 {
-  if (actualMoves <= Math.ceil(perfectMoves * 1.3)) return 3;
-  if (actualMoves <= Math.ceil(perfectMoves * 2)) return 2;
-  return 1;
-}

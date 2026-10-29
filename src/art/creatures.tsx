@@ -76,10 +76,10 @@ function Ears({ spec }: { spec: CreatureSpec }) {
     case "long":
       return (
         <>
-          <ellipse cx="33" cy="16" rx="9" ry="25" fill={spec.fur} transform="rotate(-13 33 16)" />
-          <ellipse cx="67" cy="16" rx="9" ry="25" fill={spec.fur} transform="rotate(13 67 16)" />
-          <ellipse cx="33" cy="17" rx="4.5" ry="16" fill={spec.accent} transform="rotate(-13 33 17)" />
-          <ellipse cx="67" cy="17" rx="4.5" ry="16" fill={spec.accent} transform="rotate(13 67 17)" />
+          <ellipse cx="33" cy="27" rx="9" ry="24" fill={spec.fur} transform="rotate(-13 33 27)" />
+          <ellipse cx="67" cy="27" rx="9" ry="24" fill={spec.fur} transform="rotate(13 67 27)" />
+          <ellipse cx="33" cy="27" rx="4.5" ry="15" fill={spec.accent} transform="rotate(-13 33 27)" />
+          <ellipse cx="67" cy="27" rx="4.5" ry="15" fill={spec.accent} transform="rotate(13 67 27)" />
         </>
       );
     case "none":

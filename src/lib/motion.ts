@@ -3,7 +3,7 @@
  *
  * Nearly all animation in the app runs off the --dur-* tokens, which collapse
  * to 0ms under both the OS setting and the in-app toggle. A few sequences are
- * driven from JavaScript instead (stars landing one by one, confetti cleanup),
+ * driven from JavaScript instead (confetti cleanup),
  * and those need to ask directly.
  *
  * This is only for *decorative* delays. Gameplay timings — how long a

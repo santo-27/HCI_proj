@@ -81,22 +81,33 @@ export function IconSoundOff(props: IconProps) {
   );
 }
 
-export function IconVoiceOn(props: IconProps) {
+export function IconBellOn(props: IconProps) {
   return (
     <Svg {...props}>
-      <path d="M12 3.5a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0v-5a3 3 0 0 1 3-3z" />
-      <path d="M5.5 11a6.5 6.5 0 0 0 13 0" />
-      <path d="M12 17.5V21" />
+      <path d="M6 17.5h12l-1.6-2.2V10a4.4 4.4 0 0 0-8.8 0v5.3z" />
+      <path d="M9.8 20a2.5 2.5 0 0 0 4.4 0" />
+      <path d="M12 3.2v1" />
     </Svg>
   );
 }
 
-export function IconVoiceOff(props: IconProps) {
+/** A microphone with sound waves: "talk to the app", distinct from narration. */
+export function IconListen(props: IconProps) {
   return (
     <Svg {...props}>
-      <path d="M12 3.5a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0v-5a3 3 0 0 1 3-3z" />
-      <path d="M5.5 11a6.5 6.5 0 0 0 13 0" />
-      <path d="M12 17.5V21" />
+      <path d="M12 4a2.5 2.5 0 0 1 2.5 2.5v4.5a2.5 2.5 0 0 1-5 0V6.5A2.5 2.5 0 0 1 12 4z" />
+      <path d="M7 10.5a5 5 0 0 0 10 0" />
+      <path d="M12 15.5V19" />
+      <path d="M3.5 8.5v4M20.5 8.5v4" />
+    </Svg>
+  );
+}
+
+export function IconBellOff(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M6 17.5h12l-1.6-2.2V10a4.4 4.4 0 0 0-8.8 0v5.3z" />
+      <path d="M9.8 20a2.5 2.5 0 0 0 4.4 0" />
       <path d="M4 4 L20 20" />
     </Svg>
   );
@@ -186,3 +197,28 @@ export function IconSequence(props: IconProps) {
     </Svg>
   );
 }
+
+export function IconReading(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v16H6.5A2.5 2.5 0 0 0 4 21z" />
+      <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v16h5.5A2.5 2.5 0 0 1 20 21z" />
+      <path d="M7 7h2.5M15 7h2M7 11h2.5M15 11h2" />
+    </Svg>
+  );
+}
+<svg
+  viewBox="0 0 24 24"
+  width="24"
+  height="24"
+  fill="none"
+  stroke="currentColor"
+  strokeWidth="2"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+  aria-hidden="true"
+>
+  <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+  <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+  <path d="M19 5a10 10 0 0 1 0 14" />
+</svg>

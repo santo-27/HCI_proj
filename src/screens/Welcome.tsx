@@ -15,9 +15,9 @@ import type { Hue } from "../lib/hues";
 import { useProfile } from "../context/profile";
 import { BigButton } from "../components/BigButton";
 import { Mascot } from "../components/Mascot";
-import { SettingsBar } from "../components/SettingsBar";
 import { speak } from "../lib/speech";
 import "./screens.css";
+import { CreatureBackground } from "../components/CreatureBackground";
 
 const GREETING = "Hello! How old are you? Tap your picture.";
 
@@ -38,14 +38,14 @@ export function Welcome({ onPicked }: { onPicked: () => void }) {
 
   return (
     <div className="screen welcome">
-      <div className="welcome__top">
-        <SettingsBar />
-      </div>
-
+      <CreatureBackground />
       <h1 className="welcome__title">
         <span className="welcome__title-a">Puzzle</span>
         <span className="welcome__title-b">Playground</span>
       </h1>
+      <p className="welcome__subtitle">
+        Play games and collect sticker friends!
+      </p>
 
       <Mascot line={GREETING} creature="bunny" size={120} />
 
@@ -66,7 +66,7 @@ export function Welcome({ onPicked }: { onPicked: () => void }) {
         })}
       </div>
 
-      <p className="welcome__hint">You can change this any time.</p>
+      
     </div>
   );
 }

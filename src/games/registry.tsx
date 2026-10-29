@@ -17,6 +17,7 @@ import type { Hue } from "../lib/hues";
 import {
   IconJigsaw,
   IconMemory,
+  IconReading,
   IconSequence,
   IconSorter,
 } from "../art/icons";
@@ -24,9 +25,9 @@ import { MemoryMatch } from "./memory/MemoryMatch";
 import { Jigsaw } from "./jigsaw/Jigsaw";
 import { Sorter } from "./sorter/Sorter";
 import { Sequence } from "./sequence/Sequence";
+import { ReadAloud } from "./reading/ReadAloud";
 
 export interface WinResult {
-  stars: 1 | 2 | 3;
   /** Optional line the shell speaks alongside the celebration. */
   message?: string;
 }
@@ -61,6 +62,8 @@ export interface GameDefinition {
   howTo: string;
   /** The friend who guides this game. */
   guide: string;
+  /** Extra words a child might say to ask for this game, besides its title. */
+  voiceWords: readonly string[];
   render: (props: GameRuntimeProps) => ReactNode;
 }
 
@@ -74,6 +77,7 @@ export const GAMES: readonly GameDefinition[] = [
     narration: "Memory Match. Turn over two cards and find the animals that match.",
     howTo: "Tap two cards to find a matching pair.",
     guide: "cat",
+    voiceWords: ["cards", "pairs", "matching"],
     render: ({ profile, onWin, onProgress, round }) => (
       <MemoryMatch
         key={round}
@@ -92,6 +96,7 @@ export const GAMES: readonly GameDefinition[] = [
     narration: "Jigsaw. Drag the pieces to finish the picture.",
     howTo: "Drag each piece onto the board to finish the picture.",
     guide: "owl",
+    voiceWords: ["puzzle", "picture", "pieces"],
     render: ({ profile, onWin, onProgress, round }) => (
       <Jigsaw
         key={round}
@@ -110,6 +115,7 @@ export const GAMES: readonly GameDefinition[] = [
     narration: "Shape Sorter. Drag each shape into the box where it belongs.",
     howTo: "Drag each shape into the box where it belongs.",
     guide: "frog",
+    voiceWords: ["shapes", "sort", "sorting", "colours", "colors"],
     render: ({ profile, onWin, onProgress, round }) => (
       <Sorter
         key={round}
@@ -128,10 +134,30 @@ export const GAMES: readonly GameDefinition[] = [
     narration: "Copy the Tune. Watch which buttons light up, then tap them in the same order.",
     howTo: "Watch the lights, then tap them in the same order.",
     guide: "duck",
+    voiceWords: ["tune", "music", "song", "lights", "pattern"],
     render: ({ profile, onWin, onProgress, round }) => (
       <Sequence
         key={round}
         config={profile.sequence}
+        onWin={onWin}
+        onProgress={onProgress}
+      />
+    ),
+  },
+  {
+    id: "reading",
+    title: "Read Aloud",
+    blurb: "Say the word you see",
+    hue: "sunshine",
+    Icon: IconReading,
+    narration: "Read Aloud. Look at the word, then say it into the microphone.",
+    howTo: "Read the word, then tap the microphone and say it.",
+    guide: "fox",
+    voiceWords: ["read", "words", "word"],
+    render: ({ profile, onWin, onProgress, round }) => (
+      <ReadAloud
+        key={round}
+        config={profile.reading}
         onWin={onWin}
         onProgress={onProgress}
       />

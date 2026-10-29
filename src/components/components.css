@@ -113,6 +113,98 @@
   color: var(--ink-soft);
 }
 
+/* ---- Task bar --------------------------------------------------------- */
+
+.task-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: color-mix(in srgb, var(--surface) 32%, transparent);
+  -webkit-backdrop-filter: blur(var(--blur-bar));
+  backdrop-filter: blur(var(--blur-bar));
+  border-bottom: var(--border-w) solid var(--hairline);
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+
+.task-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-w) solid var(--hairline);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--fs-sm);
+  font-weight: 800;
+}
+
+.task-bar__home-logo {
+  width: calc(34px * var(--scale));
+  height: calc(34px * var(--scale));
+}
+
+.task-bar__item:hover {
+  background: var(--bg-tint);
+}
+
+.task-bar__item--book {
+  background: var(--sunshine);
+  border-color: var(--sunshine-deep);
+  color: var(--sunshine-ink);
+}
+
+.task-bar__item--age {
+  margin-left: 0;
+}
+
+.task-bar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+}
+
+.task-bar__count {
+  font-size: calc(var(--fs-sm) * 0.85);
+  opacity: 0.75;
+}
+
+/* ---- Voice commands --------------------------------------------------- */
+
+.voice-cmd {
+  position: relative;
+}
+
+.voice-cmd__btn--listening {
+  animation: pulse-ring var(--dur-celebrate) var(--ease-out) infinite;
+}
+
+/* What was heard, or a hint, hanging just under the microphone. */
+.voice-cmd__status {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  left: 0;
+  width: max-content;
+  max-width: min(calc(360px * var(--scale)), 80vw);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border: var(--border-w) solid var(--hairline);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  animation: pop-in var(--dur) var(--ease-bounce) both;
+}
+
+.voice-cmd__status:empty {
+  display: none;
+}
+
 /* ---- Mascot ----------------------------------------------------------- */
 
 .mascot {
@@ -165,8 +257,6 @@
   border-left: var(--border-w) solid var(--hairline);
   border-bottom: var(--border-w) solid var(--hairline);
 }
-
-/* ---- StarRow ---------------------------------------------------------- */
 
 .star-row {
   display: flex;
@@ -289,4 +379,47 @@
   display: flex;
   gap: var(--space-2);
   align-items: center;
+}
+
+.settings-bar__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-bar__tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+
+  background: var(--ink);
+  color: var(--surface);
+
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    visibility var(--dur-fast) var(--ease-out);
+
+  z-index: 100;
+}
+
+.settings-bar__item:hover .settings-bar__tooltip,
+.settings-bar__item:focus-within .settings-bar__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }

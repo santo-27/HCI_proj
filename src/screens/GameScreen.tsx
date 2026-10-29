@@ -11,9 +11,9 @@ import { GameShell } from "../components/GameShell";
 
 interface GameScreenProps {
   id: GameId;
-  onExit: () => void;
+  onHome: () => void;
 }
 
-export function GameScreen({ id, onExit }: GameScreenProps) {
-  return <GameShell game={gameById(id)} onExit={onExit} />;
+export function GameScreen({ id, onHome }: GameScreenProps) {
+  return <GameShell game={gameById(id)} onHome={onHome} />;
 }

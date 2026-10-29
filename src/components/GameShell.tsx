@@ -3,7 +3,7 @@
  *
  * The shell owns everything that is the same across all four games: the header
  * and its controls, the mascot's instruction, the progress bar, and the entire
- * win sequence — fanfare, confetti, stars, sticker, and the single write to
+ * win sequence — fanfare, confetti, sticker, and the single write to
  * saved progress.
  *
  * Games therefore contain only their own puzzle logic. If you find yourself
@@ -19,20 +19,19 @@ import { cssVars } from "../lib/css";
 import { stagger } from "../lib/motion";
 import { playFanfare, unlockAudio } from "../lib/audio";
 import { cancelSpeech, speak } from "../lib/speech";
-import { IconBack, IconHome, IconReplay } from "../art/icons";
+import { IconHome, IconReplay } from "../art/icons";
 import { IconButton } from "./IconButton";
 import { BigButton } from "./BigButton";
 import { Mascot } from "./Mascot";
-import { StarRow } from "./StarRow";
 import { Celebration } from "./Celebration";
 import "./components.css";
 
 interface GameShellProps {
   game: GameDefinition;
-  onExit: () => void;
+  onHome: () => void;
 }
 
-export function GameShell({ game, onExit }: GameShellProps) {
+export function GameShell({ game, onHome }: GameShellProps) {
   const { profile, recordWin } = useProfile();
 
   const [round, setRound] = useState(0);
@@ -53,7 +52,7 @@ export function GameShell({ game, onExit }: GameShellProps) {
 
   const handleWin = useCallback(
     (result: WinResult) => {
-      const record = recordWin(game.id, result.stars);
+      const record = recordWin(game.id);
       setWin(record);
       setWinMessage(result.message ?? "You did it!");
       playFanfare();
@@ -68,8 +67,8 @@ export function GameShell({ game, onExit }: GameShellProps) {
     if (!win) return;
     const sticker = win.sticker;
     const line = sticker
-      ? `${winMessage} You earned ${win.stars} ${win.stars === 1 ? "star" : "stars"}, and a new sticker friend!`
-      : `${winMessage} You earned ${win.stars} ${win.stars === 1 ? "star" : "stars"}!`;
+      ? `${winMessage} You found a new sticker friend!`
+      : winMessage;
 
     winSpeechTimer.current = window.setTimeout(() => speak(line), stagger(1500));
     return () => window.clearTimeout(winSpeechTimer.current);
@@ -88,8 +87,6 @@ export function GameShell({ game, onExit }: GameShellProps) {
   return (
     <div className={`shell ${hueClass(game.hue)}`}>
       <header className="shell__bar">
-        <IconButton label="Back to the games" icon={<IconBack />} onClick={onExit} />
-
         <div className="shell__title">
           <game.Icon size={34} />
           <h1>{game.title}</h1>
@@ -137,8 +134,6 @@ export function GameShell({ game, onExit }: GameShellProps) {
 
           <div className="win__card">
             <h2 className="win__headline">{winMessage}</h2>
-            <StarRow stars={win.stars} animate />
-
             {win.sticker && (
               <p className="win__sticker-note">You found a new sticker friend!</p>
             )}
@@ -149,7 +144,7 @@ export function GameShell({ game, onExit }: GameShellProps) {
                 label="Home"
                 hue="sunshine"
                 icon={<IconHome size={30} />}
-                onClick={onExit}
+                onClick={onHome}
               />
             </div>
           </div>

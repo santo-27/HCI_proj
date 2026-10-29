@@ -132,10 +132,6 @@
   color: var(--ink-soft);
 }
 
-.tile__stars {
-  margin-top: auto;
-}
-
 .home__footer {
   display: flex;
   gap: var(--space-3);
@@ -208,13 +204,6 @@
   font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--ink-soft);
-}
-
-.book__stars {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--fs-btn);
 }
 
 /* ---- Game shell ------------------------------------------------------- */
@@ -325,4 +314,13 @@
   gap: var(--space-3);
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.welcome__subtitle {
+  margin: 8px 0 16px;
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  color: #7b5b91;
+  line-height: 1.5;
 }

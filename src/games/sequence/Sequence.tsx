@@ -29,13 +29,6 @@ import "./sequence.css";
 
 type Phase = "idle" | "showing" | "listening" | "between";
 
-/** Stars fall off with mistakes, but never below one. */
-function starsForMistakes(mistakes: number): 1 | 2 | 3 {
-  if (mistakes === 0) return 3;
-  if (mistakes <= 2) return 2;
-  return 1;
-}
-
 export function Sequence({
   config,
   onWin,
@@ -45,7 +38,6 @@ export function Sequence({
   const [phase, setPhase] = useState<Phase>("idle");
   const [lit, setLit] = useState<number | null>(null);
   const [step, setStep] = useState(0);
-  const [mistakes, setMistakes] = useState(0);
   const [wrongPad, setWrongPad] = useState<number | null>(null);
 
   const timers = useRef<number[]>([]);
@@ -112,7 +104,7 @@ export function Sequence({
 
     if (pattern.length >= config.targetLength) {
       speak("You copied the whole tune!");
-      later(() => onWin({ stars: starsForMistakes(mistakes) }), 700);
+      later(() => onWin({}), 700);
       return;
     }
 
@@ -121,7 +113,7 @@ export function Sequence({
     const next = [...pattern, randomInt(config.padCount)];
     setPattern(next);
     later(() => playback(next), 900);
-  }, [pattern, config.targetLength, config.padCount, mistakes, onWin, later, playback]);
+  }, [pattern, config.targetLength, config.padCount, onWin, later, playback]);
 
   function tapPad(pad: number) {
     if (phase !== "listening") return;
@@ -141,7 +133,6 @@ export function Sequence({
     // Wrong pad. Nothing is lost: the same pattern plays again and the round
     // restarts. The sequence never gets shorter and the game never ends.
     playRetry();
-    setMistakes((m) => m + 1);
     setWrongPad(pad);
     setPhase("between");
     later(() => setWrongPad(null), 600);
